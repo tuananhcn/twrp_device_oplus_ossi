@@ -12,9 +12,9 @@ $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
 PRODUCT_DEVICE := ossi
 PRODUCT_NAME := twrp_ossi
+# PRODUCT_MODEL := ossi
 PRODUCT_BRAND := oplus
-PRODUCT_MODEL := ossi
-PRODUCT_MANUFACTURER := oplus
+# PRODUCT_MANUFACTURER := oplus
 
 PRODUCT_GMS_CLIENTID_BASE := android-oplus
 

@@ -7,8 +7,13 @@
 
 DEVICE_PATH := device/oplus/ossi
 
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
+# Building with minimal manifest
+ALLOW_MISSING_DEPENDENCIES                      := true
+BUILD_BROKEN_DUP_RULES                          := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES    := true
+
+BUILD_BROKEN_NINJA_USES_ENV_VARS    += RTIC_MPGEN
+BUILD_BROKEN_PLUGIN_VALIDATION      := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
 TARGET_INIT_VENDOR_LIB          := //$(DEVICE_PATH):libinit_oplus_ossi
 TARGET_RECOVERY_DEVICE_MODULES  := libinit_oplus_ossi
@@ -38,12 +43,23 @@ DEXPREOPT_GENERATE_APEX_IMAGE := true
 TARGET_BOOTLOADER_BOARD_NAME := kalama
 TARGET_NO_BOOTLOADER := true
 
+# Crypto
+BOARD_USES_METADATA_PARTITION   := true
+TW_INCLUDE_CRYPTO               := true
+TW_INCLUDE_OMAPI                := true
+
 # Kernel
-BOARD_BOOTIMG_HEADER_VERSION := 4
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
-BOARD_KERNEL_IMAGE_NAME := Image
-TARGET_KERNEL_CONFIG := ossi_defconfig
-TARGET_KERNEL_SOURCE := kernel/oplus/ossi
+# BOARD_BOOTIMG_HEADER_VERSION := 4
+# BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+# BOARD_KERNEL_IMAGE_NAME := Image
+# TARGET_KERNEL_CONFIG := ossi_defconfig
+# TARGET_KERNEL_SOURCE := kernel/oplus/ossi
+BOARD_KERNEL_IMAGE_NAME     := Image
+BOARD_BOOT_HEADER_VERSION   := 4
+BOARD_KERNEL_PAGESIZE       := 4096
+BOARD_MKBOOTIMG_ARGS        += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS        += --pagesize $(BOARD_KERNEL_PAGESIZE)
+BOARD_RAMDISK_USE_LZ4       := true
 
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true
@@ -72,9 +88,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-# Security patch level
-VENDOR_SECURITY_PATCH := 2021-08-01
-
 # Verified Boot
 BOARD_AVB_ENABLE := true
 
@@ -92,3 +105,32 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
+
+# Tool
+TW_ENABLE_ALL_PARTITION_TOOLS := true
+TW_INCLUDE_7ZA                := true
+TW_INCLUDE_REPACKTOOLS        := true
+TW_INCLUDE_RESETPROP          := true
+TW_USE_TOOLBOX                := true
+TW_INCLUDE_ZSTD               := true
+
+# TWRP file system
+RECOVERY_SDCARD_ON_DATA     := true
+TARGET_USES_MKE2FS          := true
+TW_ENABLE_FS_COMPRESSION    := true
+TW_INCLUDE_FUSE_EXFAT       := true
+TW_INCLUDE_FUSE_NTFS        := true
+TW_INCLUDE_NTFS_3G          := true
+TW_NO_EXFAT_FUSE            := true
+
+# Other TWRP Configurations
+TARGET_RECOVERY_QCOM_RTC_FIX            := true
+TW_CUSTOM_CPU_TEMP_PATH                 := "/sys/class/thermal/thermal_zone45/temp" # CPU-0-0-0
+TW_EXCLUDE_APEX                         := true
+TW_EXCLUDE_DEFAULT_USB_INIT             := true
+TW_EXTRA_LANGUAGES                      := true
+TW_LOAD_VENDOR_MODULES                  := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
+TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI      := true
+TW_NO_SCREEN_BLANK                      := true
+TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID  := true
+TW_NO_NETWORK                           := true
