@@ -54,3 +54,10 @@ PRODUCT_PACKAGES += \
     update_engine_sideload
 
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+
+# Dynamic partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# Kernel
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
+PRODUCT_ENABLE_UFFD_GC                          := true
