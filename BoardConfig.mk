@@ -15,28 +15,51 @@ BUILD_BROKEN_NINJA_USES_ENV_VARS    += RTIC_MPGEN
 BUILD_BROKEN_PLUGIN_VALIDATION      := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
 # File systems
-TARGET_USERIMAGES_USE_F2FS := true
-TW_USE_DMCTL               := true
+# TARGET_USERIMAGES_USE_F2FS := true
+# TW_USE_DMCTL               := true
 
 # Init
 TARGET_INIT_VENDOR_LIB          := //$(DEVICE_PATH):libinit_oplus_ossi
 TARGET_RECOVERY_DEVICE_MODULES  := libinit_oplus_ossi
 
 # A/B
-AB_OTA_UPDATER := true
-AB_OTA_PARTITIONS += \
-    system \
-    vendor \
-    product \
+# AB_OTA_UPDATER := true
+AB_OTA_PARTITIONS := \
+    boot \
+    init_boot \
+    vendor_boot \
+    dtbo \
     odm \
-    system_ext
-BOARD_USES_RECOVERY_AS_BOOT := false
+    product \
+    system \
+    system_ext \
+    system_dlkm \
+    vbmeta \
+    vbmeta_system \
+    vbmeta_vendor \
+    vendor \
+    vendor_dlkm
+
+# AB partitions for oplus
+AB_OTA_PARTITIONS += \
+    my_bigball \
+    my_carrier \
+    my_company \
+    my_engineering \
+    my_heytap \
+    my_manifest \
+    my_preload \
+    my_product \
+    my_region \
+    my_stock
+
+# BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := 
+# TARGET_CPU_ABI2 := 
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := kryo300
 
@@ -72,17 +95,21 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 endif
 
 # Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE := 104857600
+BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED  := true
+# BOARD_BOOTIMAGE_PARTITION_SIZE := 104857600
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_COPY_OUT_VENDOR := vendor
-BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
+# BOARD_HAS_LARGE_FILESYSTEM := true
+# BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
+# BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SUPER_PARTITION_SIZE := 15569256448 # TODO: Fix hardcoded value
 BOARD_SUPER_PARTITION_GROUPS := oplus_dynamic_partitions
 BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system_ext system_ext product product vendor vendor odm odm my_product my_product my_company my_company my_carrier my_carrier my_region my_region my_bigball my_bigball my_heytap my_heytap my_stock my_stock my_preload my_preload my_manifest my_manifest my_engineering my_engineering
-BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
+BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 15565062144 # TODO: Fix hardcoded value
+
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_ODM             := odm
+TARGET_COPY_OUT_VENDOR          := vendor
 
 # Platform
 TARGET_BOARD_PLATFORM := kalama
