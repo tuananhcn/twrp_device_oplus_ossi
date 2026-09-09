@@ -24,7 +24,6 @@ TARGET_RECOVERY_DEVICE_MODULES  := libinit_oplus_ossi
 
 # A/B
 # AB_OTA_UPDATER := true
-BOARD_BUILD_SYSTEM_ROOT_IMAGE = false
 AB_OTA_PARTITIONS := \
     boot \
     init_boot \
@@ -54,7 +53,7 @@ AB_OTA_PARTITIONS += \
     my_region \
     my_stock
 
-# BOARD_USES_RECOVERY_AS_BOOT := false
+BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Architecture
 TARGET_ARCH := arm64
@@ -90,10 +89,10 @@ BOARD_MKBOOTIMG_ARGS        += --pagesize $(BOARD_KERNEL_PAGESIZE)
 BOARD_RAMDISK_USE_LZ4       := true
 
 # Kernel - prebuilt
-TARGET_FORCE_PREBUILT_KERNEL := true
-ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
+# TARGET_FORCE_PREBUILT_KERNEL := true
+# ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
-endif
+# endif
 
 # Partitions
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED  := true
