@@ -166,7 +166,7 @@ jobs:
         export CCACHE_EXEC=$(command -v ccache)
         export CCACHE_MAXSIZE=5G
         export USE_CCACHE=1
-        make clean
+        # make clean
         lunch ${{ env.LUNCH_TARGET }}
         # mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
         # (while true; do echo `date +%T` "Building TWRP..."; free -h; df -h / | tail -1; ps -eo pid,comm,%mem,%cpu --sort=-%mem | head -n 8; sleep 60; done) &
