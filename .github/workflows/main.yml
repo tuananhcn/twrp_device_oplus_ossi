@@ -168,7 +168,7 @@ jobs:
         export USE_CCACHE=1
         # make clean
         lunch ${{ env.LUNCH_TARGET }}
-        # mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
+        mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
         # (while true; do echo `date +%T` "Building TWRP..."; free -h; df -h / | tail -1; ps -eo pid,comm,%mem,%cpu --sort=-%mem | head -n 8; sleep 60; done) &
         (while true; do echo `date +%T` "Building TWRP..."; free -h; sleep 10; done) &
         TIP_PID=$!

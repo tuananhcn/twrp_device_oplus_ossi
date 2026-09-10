@@ -40,8 +40,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.kalama
 
-PRODUCT_PACKAGES := \
-    bootctrl.kalama \
+PRODUCT_PACKAGES += \
     libgptutils \
     libz \
     libcutils
