@@ -238,8 +238,8 @@ TW_ENABLE_ALL_PARTITION_TOOLS := true
 # -----------------------------------------------------------------------------
 # 15. Vendor modules
 # -----------------------------------------------------------------------------
-# TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
-# TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
+TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 
 # -----------------------------------------------------------------------------
 # 16. Localization / device defaults
