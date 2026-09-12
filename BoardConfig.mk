@@ -53,8 +53,8 @@ QCOM_BOARD_PLATFORMS += kalama
 # kernel loaded from boot_a/boot_b, DTB from vendor_boot.
 # TARGET_PREBUILT_KERNEL is a build-system placeholder.
 # -----------------------------------------------------------------------------
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
+# TARGET_KERNEL_ARCH := arm64
+# TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
@@ -73,7 +73,7 @@ BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Real cmdline/bootconfig comes from boot/vendor_boot.
 # Keep empty to avoid injecting guessed parameters into ramdisk-only recovery.
-BOARD_KERNEL_CMDLINE :=
+BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bootconfig buildvariant=user
 
 # -----------------------------------------------------------------------------
 # 4. A/B / Virtual A/B
