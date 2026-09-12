@@ -6,11 +6,11 @@ on:
       TWRP_MANIFEST_URL:
         description: "TWRP manifest url"
         required: true
-        default: "https://github.com/tuananhcn/platform_manifest_twrp_aosp"
+        default: "https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp"
       TWRP_MANIFEST_BRANCH:
         description: "TWRP branch"
         required: true
-        default: "twrp-16.0"
+        default: "twrp-14"
       DEVICE_TREE_URL:
         description: "Device tree url"
         required: true
@@ -30,7 +30,7 @@ on:
       LUNCH_TARGET:
         description: "Full lunch target"
         required: false
-        default: "twrp_ossi"
+        default: "twrp_ossi-eng"
       BUILD_PARTITION:
         description: "Build partition"
         required: true
