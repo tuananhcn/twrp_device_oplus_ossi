@@ -10,7 +10,7 @@ on:
       TWRP_MANIFEST_BRANCH:
         description: "TWRP branch"
         required: true
-        default: "5b9510e"
+        default: "twrp-16.0"
       DEVICE_TREE_URL:
         description: "Device tree url"
         required: true

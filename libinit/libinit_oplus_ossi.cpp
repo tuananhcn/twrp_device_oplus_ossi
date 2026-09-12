@@ -56,13 +56,9 @@ const std::unordered_map<int, ModelInfo> kModelInfoMap = {
     // {22635, {"realme",  "RE5C33",    "realme",  "RMX3820", "RMX3820", "Realme_GT5_150W"}},
     // realme GT5 240W (CN)
     // {23603, {"realme",  "RE5C33",    "realme",  "RMX3823", "RMX3823", "Realme_GT5_240W"}},
-    // Default
-    // {0,     {"OPLUS",   "SM8550",    "OPLUS",   "SM8550",  "SM8550",  "OPLUS_SM8550"}},
+    // Default fallback: OnePlus Ace 2 Pro (PJA110)
+    {0,     {"OnePlus", "OP5943L1",  "OnePlus", "PJA110",  "PJA110",  "OnePlus_Ace2_Pro"}},
 };
-
-// const std::unordered_map<int, ModelInfo> kOnePlus12RRegionMap = {
-//     {27,  {"OnePlus", "OP5D35L1",  "OnePlus", "CPH2585", "CPH2585", "OnePlus_12R_IN"}},
-// };
 
 /*
  * SetProperty does not allow updating read only properties and as a result
@@ -70,6 +66,7 @@ const std::unordered_map<int, ModelInfo> kModelInfoMap = {
  * the same thing as "SetProperty" without this restriction.
  */
 void OverrideProperty(const char* name, const char* value) {
+    if (!name || !value) return;
     size_t valuelen = strlen(value);
 
     prop_info* pi = (prop_info*)__system_property_find(name);
@@ -81,7 +78,7 @@ void OverrideProperty(const char* name, const char* value) {
 }
 
 void SetupModelProperties(const ModelInfo& info, const std::string& region) {
-    std::string name = info.base_name + region;
+    std::string name = std::string(info.base_name) + region;
     struct PropPair {
         const char* key;
         const char* value;
@@ -99,45 +96,43 @@ void SetupModelProperties(const ModelInfo& info, const std::string& region) {
     }
 }
 
-// int ParsePropertyInt(const std::string& value, int fallback) {
-//     int parsed;
-//     return ParseInt(value, &parsed) ? parsed : fallback;
-// }
-
 void vendor_load_properties() {
     std::string buf = "0";
     GetKernelCmdline("oplus_region", &buf);
 
-    auto region = std::stoi(buf);
-    auto region_suffix_iter = kRegionSuffixMap.find(region);
-
-    // Handle unknown regions gracefully
-    if (region_suffix_iter == kRegionSuffixMap.end()) {
-        LOG(WARNING) << "Unknown oplus_region: " << region << ", using default";
-        region_suffix_iter = kRegionSuffixMap.find(0);
+    int region = 0;
+    try {
+        region = std::stoi(buf);
+    } catch (...) {
+        region = 0;
     }
 
-    auto prjname = std::stoi(GetProperty("ro.boot.prjname", "0"));
-    auto model_info = kModelInfoMap.find(prjname);
+    auto region_suffix_iter = kRegionSuffixMap.find(region);
+    if (region_suffix_iter == kRegionSuffixMap.end()) {
+        region_suffix_iter = kRegionSuffixMap.find(0);
+    }
+    std::string region_suffix = (region_suffix_iter != kRegionSuffixMap.end()) ? region_suffix_iter->second : "";
 
-    // Handle unknown device models
+    std::string prjname_str = GetProperty("ro.boot.prjname", "22851");
+    int prjname = 22851;
+    try {
+        prjname = std::stoi(prjname_str);
+    } catch (...) {
+        prjname = 22851;
+    }
+
+    auto model_info = kModelInfoMap.find(prjname);
     if (model_info == kModelInfoMap.end()) {
-        LOG(ERROR) << "Unknown prjname: " << prjname << ", using default";
+        model_info = kModelInfoMap.find(22851);
+    }
+    if (model_info == kModelInfoMap.end()) {
         model_info = kModelInfoMap.find(0);
     }
 
-    SetupModelProperties(model_info->second, region_suffix_iter->second);
-
-    // Set a prop to handle rotation
-    // if (prjname == 24926) {
-    //     OverrideProperty("persist.twrp.rotation", "270");
-    // }
-    // Set a prop to handle strongbox
-    switch (prjname) {
-        // case 24851:
-        //     OverrideProperty("twrp.se.no_sb", "true");
-        //     break;
-        default:
-            OverrideProperty("twrp.se.no_sb", "false");
+    if (model_info != kModelInfoMap.end()) {
+        SetupModelProperties(model_info->second, region_suffix);
     }
+
+    // Default safe props
+    OverrideProperty("twrp.se.no_sb", "false");
 }

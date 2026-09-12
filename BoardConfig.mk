@@ -67,7 +67,7 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 
-BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+# BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_USES_RECOVERY_AS_BOOT := false
 
@@ -84,6 +84,7 @@ AB_OTA_PARTITIONS += \
     boot \
     init_boot \
     vendor_boot \
+    recovery \
     dtbo \
     vbmeta \
     vbmeta_system \
@@ -237,13 +238,14 @@ TW_ENABLE_ALL_PARTITION_TOOLS := true
 # -----------------------------------------------------------------------------
 # 15. Vendor modules
 # -----------------------------------------------------------------------------
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
-TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+# TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
+# TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 
 # -----------------------------------------------------------------------------
 # 16. Localization / device defaults
 # -----------------------------------------------------------------------------
 TW_EXTRA_LANGUAGES := true
-TW_EXCLUDE_DEFAULT_USB_INIT := true
+# TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_NO_NETWORK := true
+TW_INCLUDE_FASTBOOTD := true
