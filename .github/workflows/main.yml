@@ -191,14 +191,14 @@ jobs:
           out/target/product/${{ github.event.inputs.DEVICE_NAME }}/obj/NOTICE_FILES/src/NOTICE
           device/${{ github.event.inputs.DEVICE_PATH }}/INFO.txt
     
-    - name: Upload TWRP IMG
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
-        if-no-files-found: ignore
-        path: |
-          out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
+    - name: Upload TWRP IMG to Release
+      if: success()
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release upload "${{ github.event.inputs.RELEASE_TAG }}" \
+          "out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img" \
+          --clobber
 
     - name: Upload to Release
       if: ${{ inputs.CREATE_RELEASE == true }}
