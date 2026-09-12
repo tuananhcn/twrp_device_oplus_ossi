@@ -31,11 +31,8 @@ TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := kryo300
 
-ENABLE_CPUSETS := true
-ENABLE_SCHEDBOOST := true
-
-# Build against Android 13 (API 33) — device ships with Android 13.
-BOARD_SHIPPING_API_LEVEL := 33
+# ENABLE_CPUSETS := true
+# ENABLE_SCHEDBOOST := true
 
 # -----------------------------------------------------------------------------
 # 2. Platform identity
@@ -252,3 +249,4 @@ TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_NO_NETWORK := true
 TW_INCLUDE_FASTBOOTD := true
+TW_EXCLUDE_APEX := true
