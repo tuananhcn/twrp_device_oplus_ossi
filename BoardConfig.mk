@@ -70,7 +70,7 @@ BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 # PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 # PRODUCT_ENABLE_UFFD_GC                          := true
 
-# BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_USES_RECOVERY_AS_BOOT := false
 
@@ -148,12 +148,12 @@ BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
 # Verified from recovery.fstab: erofs and ext4 dual entries.
 # Build system needs these declarations to set up output directories.
 # -----------------------------------------------------------------------------
-BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+# BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
 
 BOARD_USES_VENDOR_DLKMIMAGE := true
@@ -247,8 +247,8 @@ TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 # -----------------------------------------------------------------------------
 # 16. Localization / device defaults
 # -----------------------------------------------------------------------------
-TW_EXTRA_LANGUAGES := true
-# TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_EXTRA_LANGUAGES := false
+TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_NO_NETWORK := true
 TW_INCLUDE_FASTBOOTD := true
