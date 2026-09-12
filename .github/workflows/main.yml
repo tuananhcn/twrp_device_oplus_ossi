@@ -154,6 +154,20 @@ jobs:
         cat INFO.txt
       working-directory: device/${{ github.event.inputs.DEVICE_PATH }}
 
+    - name: Debug release config
+      run: |
+        echo "=== build/release ==="
+        ls -la build/release || true
+
+        echo "=== release configs ==="
+        find build/release -maxdepth 3 -type f 2>/dev/null | sort | head -100 || true
+
+        echo "=== repo projects ==="
+        repo list | grep 'build/release\|build/make' || true
+
+        echo "=== lunch ==="
+        source build/envsetup.sh
+        lunch twrp_ossi-ap2a-eng
     - name: Build TWRP
       run: |
         source build/envsetup.sh
