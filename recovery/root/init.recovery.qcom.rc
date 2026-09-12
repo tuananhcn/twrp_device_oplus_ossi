@@ -25,9 +25,35 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# on init
+#     write /sys/class/backlight/panel0-backlight/brightness 200
+#     setprop sys.usb.configfs 1
+
+# on property:ro.boot.usbcontroller=*
+#     setprop sys.usb.controller ${ro.boot.usbcontroller}
+#     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+#     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+#     wait /sys/class/udc/${ro.boot.usbcontroller} 1
+
+# on fs
+#     wait /dev/block/platform/soc/${ro.boot.bootdevice}
+#     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+on early-fs
+    write /proc/sys/walt/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
+    write /proc/sys/walt/sched_lib_mask_force 255
+
+service post-boot-script /system/bin/sh -c /vendor/bin/init.kernel.post_boot-sun_default_6_2.sh
+    user root
+    group root
+    oneshot
+    seclabel u:r:recovery:s0
+
 on init
-    write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
+    setprop prepdecrypt.setpatch true
+    start vendor.boot-qti
+    start vendor.gatekeeper_default
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
@@ -38,3 +64,28 @@ on property:ro.boot.usbcontroller=*
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+
+on property:twrp.modules.loaded=true
+    # Mount firmware
+    mkdir /firmware
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    # Load ADSP firmware for PMIC
+    wait /sys/kernel/boot_adsp/ssr
+    write /sys/kernel/boot_adsp/ssr 1
+    wait /sys/class/power_supply/battery
+    start vendor.health-default
+    start override-spl
+    umount /vendor
+    symlink /firmware /vendor/firmware_mnt
+    start vendor.oplus.vibrator
+    trigger twrp_secure_element
+
+on twrp_secure_element && property:twrp.se.no_sb=false
+    enable vendor.keymint-strongbox
+    enable vendor.weaver_nxp
+    enable vendor.secure_element
+
+on property:vendor.sys.listeners.registered=true
+    setprop sys.boot_completed 1
+    start vendor.ssgtzd

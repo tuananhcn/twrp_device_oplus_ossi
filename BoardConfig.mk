@@ -116,21 +116,34 @@ BOARD_RECOVERY_NEEDS_BOOTLOADER_CONTROL := true
 # 5. AVB
 # -----------------------------------------------------------------------------
 BOARD_AVB_ENABLE := true
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
 # -----------------------------------------------------------------------------
-BOARD_BOOTIMAGE_PARTITION_SIZE := 104857600
+BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
+BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 
 # -----------------------------------------------------------------------------
 # 7. Dynamic partitions / super
 # -----------------------------------------------------------------------------
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
-BOARD_SUPER_PARTITION_SIZE := 15569256448
+BOARD_SUPER_PARTITION_SIZE := 16106127360
 BOARD_SUPER_PARTITION_GROUPS := oplus_dynamic_partitions
 
-BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 15565062144
+BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 16101933056
 BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system \
     system_ext \
