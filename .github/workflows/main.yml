@@ -39,11 +39,15 @@ on:
         description: "Build parallel jobs (0 = auto, capped at 3 to avoid OOM)"
         required: true
         default: "0"
+      CREATE_RELEASE:
+        description: "Create GitHub Release"
+        required: true
+        default: false
+        type: boolean
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # timeout-minutes: 360
     permissions:
       contents: write
     steps:
@@ -74,18 +78,18 @@ jobs:
         
     - name: Cleanup Hub Tools
       uses: rokibhasansagar/slimhub_actions@main
-    # 先腾磁盘 + 建 12G 磁盘 swap(扛住内存峰值的关键),必须在装软件/同步源码之前
+
     - name: Maximize build space
       uses: easimon/maximize-build-space@master
       # with:
       #   root-reserve-mb: 2048
       #   temp-reserve-mb: 1024
       #   swap-size-mb: 0
-        # remove-dotnet: 'true'
-        # remove-android: 'true'
-        # remove-haskell: 'true'
-        # remove-codeql: 'true'
-        # remove-docker-images: 'true'
+      #   remove-dotnet: 'true'
+      #   remove-android: 'true'
+      #   remove-haskell: 'true'
+      #   remove-codeql: 'true'
+      #   remove-docker-images: 'true'
         
     - name: Setup ccache
       uses: hendrikmuhs/ccache-action@v1.2
@@ -154,7 +158,6 @@ jobs:
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        # 并发上限封到 3,防止链接阶段内存打爆导致 runner 失联
         JOBS="${{ github.event.inputs.BUILD_JOBS }}"
         CORES=$(nproc --all)
         if [ -z "$JOBS" ] || [ "$JOBS" = "0" ]; then
@@ -168,13 +171,10 @@ jobs:
         export USE_CCACHE=1
         # make clean
         lunch ${{ env.LUNCH_TARGET }}
-        mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
-        # (while true; do echo `date +%T` "Building TWRP..."; free -h; df -h / | tail -1; ps -eo pid,comm,%mem,%cpu --sort=-%mem | head -n 8; sleep 60; done) &
+        # mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
         (while true; do echo `date +%T` "Building TWRP..."; free -h; sleep 10; done) &
         TIP_PID=$!
         m -j$JOBS ${{ github.event.inputs.BUILD_PARTITION }}image
-        # kill $TIP_PID
-        # mv out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_PARTITION }}.img out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
         mv out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_PARTITION }}.img out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
         kill $TIP_PID && exit 0
     - name: Upload build logs
@@ -190,8 +190,18 @@ jobs:
           out/build.log
           out/target/product/${{ github.event.inputs.DEVICE_NAME }}/obj/NOTICE_FILES/src/NOTICE
           device/${{ github.event.inputs.DEVICE_PATH }}/INFO.txt
+    
+    - name: Upload TWRP IMG
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
+        if-no-files-found: ignore
+        path: |
+          out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
 
     - name: Upload to Release
+      if: ${{ inputs.CREATE_RELEASE == true }}
       uses: softprops/action-gh-release@v2
       with:
         files: |

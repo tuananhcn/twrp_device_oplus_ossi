@@ -53,3 +53,7 @@ PRODUCT_PACKAGES += \
     update_engine_sideload
 
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+
+# OTA certs
+PRODUCT_EXTRA_RECOVERY_KEYS += \
+	$(DEVICE_PATH)/security/local_OTA
