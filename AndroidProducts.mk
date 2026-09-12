@@ -9,6 +9,6 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/twrp_ossi.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_ossi-trunk_staging-eng
+    twrp_ossi-ap2a-eng
 #     twrp_ossi-user \
 #     twrp_ossi-userdebug \
