@@ -62,7 +62,7 @@ BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
 
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+# TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
@@ -198,10 +198,10 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 # -----------------------------------------------------------------------------
 # 11. Recovery base
 # -----------------------------------------------------------------------------
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_QCOM_RTC_FIX := true
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+# TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 RECOVERY_SDCARD_ON_DATA := true
 
 # Init
