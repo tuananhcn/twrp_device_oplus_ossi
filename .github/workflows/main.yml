@@ -30,7 +30,7 @@ on:
       LUNCH_TARGET:
         description: "Full lunch target"
         required: false
-        default: "twrp_ossi-eng"
+        default: "twrp_ossi-trunk_staging-eng"
       BUILD_PARTITION:
         description: "Build partition"
         required: true
