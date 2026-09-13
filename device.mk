@@ -30,27 +30,50 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Shipping API level
 BOARD_SHIPPING_API_LEVEL    := 33
 PRODUCT_SHIPPING_API_LEVEL  := 33
-PRODUCT_TARGET_VNDK_VERSION := 33
+# PRODUCT_TARGET_VNDK_VERSION := 33
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-impl \
-    android.hardware.boot@1.0-service
+    android.hardware.boot@1.2-impl \
+    android.hardware.boot@1.2-impl.recovery \
+    android.hardware.boot@1.2-service
 
 PRODUCT_PACKAGES += \
     bootctrl.kalama
+
+# fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.1-impl-mock \
+    fastbootd
+
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service
+
+# Kernel
+PRODUCT_ENABLE_UFFD_GC := true
+
+# Overlays
+PRODUCT_ENFORCE_RRO_TARGETS := *
+
+# Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# Product characteristics
+PRODUCT_CHARACTERISTICS := nosdcard
 
 PRODUCT_PACKAGES += \
     libgptutils \
     libz \
     libcutils
 
-PRODUCT_PACKAGES += \
-    otapreopt_script \
-    cppreopts.sh \
-    update_engine \
-    update_verifier \
-    update_engine_sideload
+# PRODUCT_PACKAGES += \
+#     otapreopt_script \
+#     cppreopts.sh \
+#     update_engine \
+#     update_verifier \
+#     update_engine_sideload
 
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
