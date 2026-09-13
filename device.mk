@@ -57,3 +57,8 @@ PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 # OTA certs
 PRODUCT_EXTRA_RECOVERY_KEYS += \
 	$(DEVICE_PATH)/security/local_OTA
+
+# Copy prebuilt vendor recovery binaries
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/vendor/bin/hw/vendor.qti.hardware.vibrator.service:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/bin/hw/vendor.qti.hardware.vibrator.service \
+    $(LOCAL_PATH)/recovery/root/vendor/etc/init/vendor.qti.hardware.vibrator.service.rc:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/init/vendor.qti.hardware.vibrator.service.rc
