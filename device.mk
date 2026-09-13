@@ -60,3 +60,8 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 PRODUCT_ENABLE_UFFD_GC                          := true
+
+# Copy prebuilt vendor recovery binaries
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/vendor/bin/hw/vendor.qti.hardware.vibrator.service:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/bin/hw/vendor.qti.hardware.vibrator.service \
+    $(LOCAL_PATH)/recovery/root/vendor/etc/init/vendor.qti.hardware.vibrator.service.rc:$(TARGET_COPY_OUT_RECOVERY)/root/vendor/etc/init/vendor.qti.hardware.vibrator.service.rc

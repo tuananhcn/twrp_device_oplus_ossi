@@ -217,7 +217,13 @@ RECOVERY_SDCARD_ON_DATA := true
 # Init
 TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_oplus_ossi
 TARGET_RECOVERY_DEVICE_MODULES := libinit_oplus_ossi
+# Haptics / Vibration
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 
+# Include custom init scripts in ramdisk
+TARGET_RECOVERY_DEVICE_MODULES += \
+    init.recovery.qcom.rc \
+    init.recovery.usb.rc
 # -----------------------------------------------------------------------------
 # 12. Display / theme
 # -----------------------------------------------------------------------------
