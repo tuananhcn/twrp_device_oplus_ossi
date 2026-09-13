@@ -82,20 +82,20 @@ BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bo
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
-    init_boot \
-    vendor_boot \
-    recovery \
     dtbo \
+    init_boot \
+    odm \
+    product \
+    recovery \
+    system \
+    system_dlkm \
+    system_ext \
     vbmeta \
     vbmeta_system \
     vbmeta_vendor \
-    system \
-    system_ext \
-    system_dlkm \
-    product \
     vendor \
-    vendor_dlkm \
-    odm
+    vendor_boot \
+    vendor_dlkm
 
 # AB partitions for oplus
 AB_OTA_PARTITIONS += \
