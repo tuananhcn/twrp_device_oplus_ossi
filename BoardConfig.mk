@@ -57,19 +57,21 @@ QCOM_BOARD_PLATFORMS += kalama
 # TARGET_PREBUILT_KERNEL is a build-system placeholder.
 # -----------------------------------------------------------------------------
 TARGET_KERNEL_ARCH := arm64
+BOARD_KERNEL_BASE := 0x00000000
 TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
-
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
-BOARD_INCLUDE_DTB_IN_BOOTIMG := 
+BOARD_INCLUDE_DTB_IN_BOOTIMG :=
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
-BOARD_KERNEL_SEPARATED_DTBO := 
+BOARD_KERNEL_SEPARATED_DTBO :=
 endif
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
@@ -81,7 +83,7 @@ BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Real cmdline/bootconfig comes from boot/vendor_boot.
 # Keep empty to avoid injecting guessed parameters into ramdisk-only recovery.
-BOARD_KERNEL_CMDLINE :=
+BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bootconfig buildvariant=user
 
 # -----------------------------------------------------------------------------
 # 4. A/B / Virtual A/B
@@ -137,11 +139,11 @@ BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
 # -----------------------------------------------------------------------------
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
-BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
+# BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+# BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
-BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
+# BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 
 # -----------------------------------------------------------------------------
