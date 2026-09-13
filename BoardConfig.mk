@@ -55,6 +55,7 @@ QCOM_BOARD_PLATFORMS += kalama
 # -----------------------------------------------------------------------------
 # TARGET_KERNEL_ARCH := arm64
 # TARGET_KERNEL_HEADER_ARCH := arm64
+BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
@@ -129,11 +130,11 @@ BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
 # -----------------------------------------------------------------------------
-BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
-BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
+# BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+# BOARD_BOOTIMAGE_PARTITION_SIZE := 201326592
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
-BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
+# BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 
 # -----------------------------------------------------------------------------
