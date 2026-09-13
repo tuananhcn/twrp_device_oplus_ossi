@@ -38,12 +38,12 @@
 # on fs
 #     wait /dev/block/platform/soc/${ro.boot.bootdevice}
 #     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-
+import /init.recovery.qcom_decrypt.rc
 on early-fs
     write /proc/sys/walt/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
     write /proc/sys/walt/sched_lib_mask_force 255
 
-service post-boot-script /system/bin/sh -c /vendor/bin/init.kernel.post_boot-sun_default_6_2.sh
+service post-boot-script /system/bin/sh -c /vendor/bin/init.kernel.post_boot-kalama_default_3_4_1.sh
     user root
     group root
     oneshot
