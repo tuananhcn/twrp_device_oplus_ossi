@@ -60,10 +60,19 @@ BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
 
-# TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_FORCE_PREBUILT_KERNEL := true
+ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+BOARD_INCLUDE_DTB_IN_BOOTIMG := 
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
+BOARD_KERNEL_SEPARATED_DTBO := 
+endif
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
+BOARD_MKBOOTIMG_ARGS += --ramdisk_type lz4_legacy
 
 # PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 # PRODUCT_ENABLE_UFFD_GC                          := true
@@ -208,15 +217,12 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 # -----------------------------------------------------------------------------
 # 11. Recovery base
 # -----------------------------------------------------------------------------
-# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 # TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 RECOVERY_SDCARD_ON_DATA := true
 
-# Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_oplus_ossi
-TARGET_RECOVERY_DEVICE_MODULES := libinit_oplus_ossi
 # Haptics / Vibration
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 
