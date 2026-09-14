@@ -93,16 +93,10 @@ AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
-    dtbo \
     init_boot \
     odm \
     product \
-    odm \
-    product \
     recovery \
-    system \
-    system_dlkm \
-    system_ext \
     system \
     system_dlkm \
     system_ext \
@@ -110,8 +104,6 @@ AB_OTA_PARTITIONS += \
     vbmeta_system \
     vbmeta_vendor \
     vendor \
-    vendor_boot \
-    vendor_dlkm
     vendor_boot \
     vendor_dlkm
 
