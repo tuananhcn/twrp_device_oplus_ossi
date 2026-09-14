@@ -27,7 +27,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 #     POSTINSTALL_OPTIONAL_system=true
 
 # Shipping API level
-BOARD_SHIPPING_API_LEVEL := 31
+BOARD_SHIPPING_API_LEVEL := 33
 BOARD_API_LEVEL := 31
 SHIPPING_API_LEVEL := 31
 PRODUCT_SHIPPING_API_LEVEL := 31
