@@ -148,7 +148,6 @@ BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 16101933056
 BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system \
     system_ext \
-    system_dlkm \
     product \
     vendor \
     vendor_dlkm \

@@ -11,16 +11,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 # Configure core_64_bit_only.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
 
-# Configure virtual_ab compression.mk
-# $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression_with_xor.mk)
-
 # Configure emulated_storage.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
 # Installs gsi keys into ramdisk, to boot a GSI with verified boot.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
-
+# Virtual A/B
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
