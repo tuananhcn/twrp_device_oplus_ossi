@@ -72,7 +72,7 @@ endif
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
-BOARD_MKBOOTIMG_ARGS += --ramdisk_type lz4_legacy
+# BOARD_MKBOOTIMG_ARGS += --ramdisk_type lz4_legacy
 # PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 # PRODUCT_ENABLE_UFFD_GC                          := true
 
