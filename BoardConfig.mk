@@ -64,12 +64,13 @@ BOARD_KERNEL_PAGESIZE := 4096
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
-
+BOARD_MKBOOTIMG_ARGS += --ramdisk_type lz4_legacy
 # PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 # PRODUCT_ENABLE_UFFD_GC                          := true
 
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 BOARD_RAMDISK_USE_LZ4 := true
+LZ4_RAMDISK_TARGETS := recovery
 BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Real cmdline/bootconfig comes from boot/vendor_boot.
