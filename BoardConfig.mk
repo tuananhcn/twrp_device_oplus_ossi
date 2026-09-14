@@ -55,7 +55,7 @@ QCOM_BOARD_PLATFORMS += kalama
 # -----------------------------------------------------------------------------
 # TARGET_KERNEL_ARCH := arm64
 # TARGET_KERNEL_HEADER_ARCH := arm64
-BOARD_KERNEL_BASE := 0x00000000
+# BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
@@ -83,7 +83,7 @@ BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Real cmdline/bootconfig comes from boot/vendor_boot.
 # Keep empty to avoid injecting guessed parameters into ramdisk-only recovery.
-BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bootconfig buildvariant=user
+BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bootconfig
 
 # -----------------------------------------------------------------------------
 # 4. A/B / Virtual A/B
@@ -126,15 +126,15 @@ BOARD_RECOVERY_NEEDS_BOOTLOADER_CONTROL := true
 # 5. AVB
 # -----------------------------------------------------------------------------
 BOARD_AVB_ENABLE := true
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+# BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
@@ -144,7 +144,7 @@ BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 # BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
+# BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 
 # -----------------------------------------------------------------------------
 # 7. Dynamic partitions / super
@@ -203,12 +203,12 @@ BOARD_USES_QCOM_FBE_DECRYPTION := true
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
-TW_USE_FSCRYPT_POLICY := 2
+# TW_USE_FSCRYPT_POLICY := 2
 
 # -----------------------------------------------------------------------------
 # 10. Recovery-side security patch compatibility
 # -----------------------------------------------------------------------------
-PLATFORM_VERSION := 99.87.36
+PLATFORM_VERSION := 13.0.1
 PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
@@ -247,18 +247,18 @@ TW_INPUT_BLACKLIST := "hbtp_vm"
 # -----------------------------------------------------------------------------
 # 14. Storage / tools
 # -----------------------------------------------------------------------------
-TW_ENABLE_FS_COMPRESSION := true
-TW_INCLUDE_FUSE_EXFAT := true
-TW_INCLUDE_FUSE_NTFS := true
-TW_INCLUDE_NTFS_3G := true
-TW_NO_EXFAT_FUSE := true
+# TW_ENABLE_FS_COMPRESSION := true
+# TW_INCLUDE_FUSE_EXFAT := true
+# TW_INCLUDE_FUSE_NTFS := true
+# TW_INCLUDE_NTFS_3G := true
+# TW_NO_EXFAT_FUSE := true
 
-TW_INCLUDE_7ZA := true
-TW_INCLUDE_REPACKTOOLS := true
-TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_ZSTD := true
-TW_USE_TOOLBOX := true
-TW_ENABLE_ALL_PARTITION_TOOLS := true
+# TW_INCLUDE_7ZA := true
+# TW_INCLUDE_REPACKTOOLS := true
+# TW_INCLUDE_RESETPROP := true
+# TW_INCLUDE_ZSTD := true
+# TW_USE_TOOLBOX := true
+# TW_ENABLE_ALL_PARTITION_TOOLS := true
 
 # -----------------------------------------------------------------------------
 # 15. Vendor modules
@@ -270,11 +270,11 @@ TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 # 16. Localization / device defaults
 # -----------------------------------------------------------------------------
 TW_EXTRA_LANGUAGES := false
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+# TW_EXCLUDE_DEFAULT_USB_INIT := true
+# TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_NO_NETWORK := true
-TW_INCLUDE_FASTBOOTD := true
-TW_EXCLUDE_APEX := true
+# TW_INCLUDE_FASTBOOTD := true
+# TW_EXCLUDE_APEX := true
 
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
