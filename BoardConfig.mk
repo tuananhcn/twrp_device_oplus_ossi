@@ -44,7 +44,7 @@ TARGET_BOOTLOADER_BOARD_NAME := kalama
 TARGET_BOARD_PLATFORM := kalama
 
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_KERNEL := true
+# TARGET_NO_KERNEL := true
 TARGET_USES_UEFI := true
 QCOM_BOARD_PLATFORMS += kalama
 
@@ -127,15 +127,15 @@ BOARD_RECOVERY_NEEDS_BOOTLOADER_CONTROL := true
 # 5. AVB
 # -----------------------------------------------------------------------------
 BOARD_AVB_ENABLE := true
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+# BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
@@ -219,7 +219,7 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 # -----------------------------------------------------------------------------
 # 11. Recovery base
 # -----------------------------------------------------------------------------
-# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 # TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
