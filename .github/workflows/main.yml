@@ -34,7 +34,7 @@ on:
       BUILD_PARTITION:
         description: "Build partition"
         required: true
-        default: "recovery"
+        default: "recoveryimage"
       BUILD_JOBS:
         description: "Build parallel jobs (0 = auto, capped at 3 to avoid OOM)"
         required: true
