@@ -19,7 +19,8 @@ BUILD_BROKEN_PLUGIN_VALIDATION := \
     soong-libguitwrp_defaults \
     soong-libminuitwrp_defaults \
     soong-vold_defaults
-
+BUILD_BROKEN_MISSING_USES_LIBS := true
+BOARD_ADAPT_AIDL_VERSION := false
 # -----------------------------------------------------------------------------
 # 1. Architecture
 # SM8550 (Kalama) — Kryo cores, arm64-v8a
