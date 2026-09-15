@@ -34,7 +34,7 @@ on:
       BUILD_PARTITION:
         description: "Build partition"
         required: true
-        default: "recoveryimage"
+        default: "recovery"
       BUILD_JOBS:
         description: "Build parallel jobs (0 = auto, capped at 3 to avoid OOM)"
         required: true
@@ -174,7 +174,7 @@ jobs:
         # mkdir -p out/target/product/${{ github.event.inputs.DEVICE_NAME }}/root
         (while true; do echo `date +%T` "Building TWRP..."; free -h; sleep 10; done) &
         TIP_PID=$!
-        m -j$JOBS ${{ github.event.inputs.BUILD_PARTITION }}image
+        m -j$JOBS ${{ github.event.inputs.BUILD_PARTITION }}
         mv out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_PARTITION }}.img out/target/product/${{ github.event.inputs.DEVICE_NAME }}/TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
         kill $TIP_PID && exit 0
 
