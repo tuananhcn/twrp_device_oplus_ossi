@@ -1,51 +1,35 @@
 #
 # Copyright (C) 2026 The Android Open Source Project
-# Copyright (C) 2026 SebaUbuntu's TWRP device tree generator
 #
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/oplus/ossi
-
-# -----------------------------------------------------------------------------
-# 0. Build compatibility
-# -----------------------------------------------------------------------------
+# Building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+
+# Rules
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
-BUILD_BROKEN_PLUGIN_VALIDATION := \
-    soong-libaosprecovery_defaults \
-    soong-libguitwrp_defaults \
-    soong-libminuitwrp_defaults \
-    soong-vold_defaults
 
-# -----------------------------------------------------------------------------
-# 1. Architecture
-# SM8550 (Kalama) — Kryo cores, arm64-v8a
-# -----------------------------------------------------------------------------
+# Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-# TARGET_CPU_ABI2 :=
+TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
 # TARGET_CPU_VARIANT_RUNTIME := kryo300
 
-# ENABLE_CPUSETS := true
-# ENABLE_SCHEDBOOST := true
-
-# -----------------------------------------------------------------------------
-# 2. Platform identity
-# ro.board.platform=kalama
-# ro.vendor.qti.soc_model=SM8550
-# -----------------------------------------------------------------------------
+# Bootloader
 PRODUCT_PLATFORM := kalama
-TARGET_BOOTLOADER_BOARD_NAME := kalama
-TARGET_BOARD_PLATFORM := kalama
+TARGET_BOOTLOADER_BOARD_NAME := $(PRODUCT_PLATFORM)
+TARGET_NO_BOOTLOADER := true
 
-# TARGET_NO_BOOTLOADER := true
+# Platform
+TARGET_BOARD_PLATFORM := sm8550
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno740
+QCOM_BOARD_PLATFORMS += sm8550
+
 # TARGET_USES_UEFI := true
-QCOM_BOARD_PLATFORMS += kalama
 
 # -----------------------------------------------------------------------------
 # 3. Kernel / boot image / recovery image
@@ -81,51 +65,63 @@ BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 nosoftlockup bo
 # Dedicated recovery_a / recovery_b partitions exist.
 # -----------------------------------------------------------------------------
 AB_OTA_UPDATER := true
+# AB_OTA_PARTITIONS += \
+#     boot \
+#     dtbo \
+#     init_boot \
+#     odm \
+#     product \
+#     recovery \
+#     system \
+#     system_dlkm \
+#     system_ext \
+#     vbmeta \
+#     vbmeta_system \
+#     vbmeta_vendor \
+#     vendor \
+#     vendor_boot \
+#     vendor_dlkm
 AB_OTA_PARTITIONS += \
     boot \
-    dtbo \
     init_boot \
-    odm \
-    product \
-    recovery \
-    system \
-    system_dlkm \
-    system_ext \
+    vendor_boot \
+    dtbo \
     vbmeta \
     vbmeta_system \
-    vbmeta_vendor \
+    odm \
+    product \
+    system \
+    system_ext \
+    system_dlkm \
     vendor \
-    vendor_boot \
     vendor_dlkm
 
 # AB partitions for oplus
-AB_OTA_PARTITIONS += \
-    my_bigball \
-    my_carrier \
-    my_company \
-    my_engineering \
-    my_heytap \
-    my_manifest \
-    my_preload \
-    my_product \
-    my_region \
-    my_stock
+# AB_OTA_PARTITIONS += \
+#     my_bigball \
+#     my_carrier \
+#     my_company \
+#     my_engineering \
+#     my_heytap \
+#     my_manifest \
+#     my_preload \
+#     my_product \
+#     my_region \
+#     my_stock
 
 BOARD_RECOVERY_NEEDS_BOOTLOADER_CONTROL := true
 
-# -----------------------------------------------------------------------------
-# 5. AVB
-# -----------------------------------------------------------------------------
+# Verified Boot
 BOARD_AVB_ENABLE := true
-BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
-BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+# BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+# BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
+# BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+# BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
+# BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 
 # -----------------------------------------------------------------------------
 # 6. Physical partition sizes
