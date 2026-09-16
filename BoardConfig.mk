@@ -27,9 +27,9 @@ BUILD_BROKEN_PLUGIN_VALIDATION := \
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 :=
+# TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := generic
-TARGET_CPU_VARIANT_RUNTIME := kryo300
+# TARGET_CPU_VARIANT_RUNTIME := kryo300
 
 # ENABLE_CPUSETS := true
 # ENABLE_SCHEDBOOST := true
@@ -43,8 +43,8 @@ PRODUCT_PLATFORM := kalama
 TARGET_BOOTLOADER_BOARD_NAME := kalama
 TARGET_BOARD_PLATFORM := kalama
 
-TARGET_NO_BOOTLOADER := true
-TARGET_USES_UEFI := true
+# TARGET_NO_BOOTLOADER := true
+# TARGET_USES_UEFI := true
 QCOM_BOARD_PLATFORMS += kalama
 
 # -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ QCOM_BOARD_PLATFORMS += kalama
 # -----------------------------------------------------------------------------
 # TARGET_KERNEL_ARCH := arm64
 # TARGET_KERNEL_HEADER_ARCH := arm64
-BOARD_KERNEL_BASE := 0x00000000
+# BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
