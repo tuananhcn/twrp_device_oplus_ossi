@@ -31,29 +31,26 @@ QCOM_BOARD_PLATFORMS += sm8550
 
 # TARGET_USES_UEFI := true
 
-# -----------------------------------------------------------------------------
-# 3. Kernel / boot image / recovery image
-# boot header v4, dedicated recovery partition (ramdisk-only),
-# kernel loaded from boot_a/boot_b, DTB from vendor_boot.
-# TARGET_PREBUILT_KERNEL is a build-system placeholder.
-# -----------------------------------------------------------------------------
-# TARGET_KERNEL_ARCH := arm64
-# TARGET_KERNEL_HEADER_ARCH := arm64
-# BOARD_KERNEL_BASE := 0x00000000
+# Kernel
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
-
+# TARGET_KERNEL_CLANG_COMPILE   := true
 # TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+BOARD_MKBOOTIMG_ARGS          += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS          += --pagesize $(BOARD_KERNEL_PAGESIZE)
+# TARGET_KERNEL_ARCH := arm64
+# TARGET_KERNEL_HEADER_ARCH := arm64
+# BOARD_KERNEL_BASE := 0x00000000
 
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
-BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
+# Ramdisk use lz4
+BOARD_RAMDISK_USE_LZ4 := true
 
 # PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
 # PRODUCT_ENABLE_UFFD_GC                          := true
 
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-BOARD_RAMDISK_USE_LZ4 := true
+
 BOARD_USES_RECOVERY_AS_BOOT := false
 
 # Real cmdline/bootconfig comes from boot/vendor_boot.
