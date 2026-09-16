@@ -35,8 +35,8 @@ QCOM_BOARD_PLATFORMS += sm8550
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_PAGESIZE := 4096
-# TARGET_KERNEL_CLANG_COMPILE   := true
-# TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_KERNEL_CLANG_COMPILE   := true
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 BOARD_MKBOOTIMG_ARGS          += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS          += --pagesize $(BOARD_KERNEL_PAGESIZE)
 # TARGET_KERNEL_ARCH := arm64
@@ -130,15 +130,13 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 # BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 201326592
 
-# -----------------------------------------------------------------------------
-# 7. Dynamic partitions / super
-# -----------------------------------------------------------------------------
+# Partitions
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 BOARD_SUPER_PARTITION_SIZE := 16106127360
-BOARD_SUPER_PARTITION_GROUPS := oplus_dynamic_partitions
+BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
 
-BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 16101933056
-BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 16101933056
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system \
     system_ext \
     system_dlkm \
@@ -147,34 +145,21 @@ BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     vendor_dlkm \
     odm
 
-# -----------------------------------------------------------------------------
-# 8. Filesystems / partition copy-out
-# Verified from recovery.fstab: erofs and ext4 dual entries.
-# Build system needs these declarations to set up output directories.
-# -----------------------------------------------------------------------------
-# BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-# BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
-# BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
-# BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
-# BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-# BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+# System as root
+BOARD_ROOT_EXTRA_FOLDERS := bluetooth dsp firmware persist soccp
 
-BOARD_USES_VENDOR_DLKMIMAGE := true
-
-# TARGET_COPY_OUT_SYSTEM := system
-# TARGET_COPY_OUT_SYSTEM_EXT := system_ext
-# TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
-# TARGET_COPY_OUT_PRODUCT := product
+# Workaround for error copying vendor files to recovery ramdisk
 TARGET_COPY_OUT_VENDOR := vendor
-# TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
-TARGET_COPY_OUT_ODM := odm
 
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
-TARGET_USERIMAGES_USE_F2FS := true
+TARGET_COPY_OUT_ODM := odm
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_USES_VENDOR_DLKMIMAGE := true
+TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+
+# File systems
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USES_MKE2FS := true
-BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_USERIMAGES_USE_F2FS := true
 
 # -----------------------------------------------------------------------------
 # 9. Crypto / FBE
@@ -202,64 +187,68 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 # -----------------------------------------------------------------------------
 # 11. Recovery base
 # -----------------------------------------------------------------------------
-# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-# TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-RECOVERY_SDCARD_ON_DATA := true
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_oplus_ossi
-TARGET_RECOVERY_DEVICE_MODULES := libinit_oplus_ossi
-# Haptics / Vibration
-TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+# TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_oplus_ossi
+# TARGET_RECOVERY_DEVICE_MODULES := libinit_oplus_ossi
 
-# Include custom init scripts in ramdisk
-TARGET_RECOVERY_DEVICE_MODULES += \
-    init.recovery.qcom.rc \
-    init.recovery.usb.rc
-# -----------------------------------------------------------------------------
-# 12. Display / theme
-# -----------------------------------------------------------------------------
-TW_THEME := portrait_hdpi
-TW_NO_SCREEN_BLANK := true
-TW_SCREEN_BLANK_ON_BOOT := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone45/temp"
-TW_DEVICE_VERSION := OPLUS-OSSI
+# Crypto
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+BOARD_USES_METADATA_PARTITION := true
+TW_INCLUDE_OMAPI := true
+TW_USE_FSCRYPT_POLICY := 2
+PLATFORM_VERSION := 99.87.36
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
-# -----------------------------------------------------------------------------
-# 13. Input
-# -----------------------------------------------------------------------------
-TW_INPUT_BLACKLIST := "hbtp_vm"
-
-# -----------------------------------------------------------------------------
-# 14. Storage / tools
-# -----------------------------------------------------------------------------
-TW_ENABLE_FS_COMPRESSION := true
-TW_INCLUDE_FUSE_EXFAT := true
-TW_INCLUDE_FUSE_NTFS := true
-TW_INCLUDE_NTFS_3G := true
-TW_NO_EXFAT_FUSE := true
-
+# Tool
 TW_INCLUDE_7ZA := true
+TW_INCLUDE_ZSTD := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_ZSTD := true
-TW_USE_TOOLBOX := true
+TW_INCLUDE_LIBRESETPROP := true
 TW_ENABLE_ALL_PARTITION_TOOLS := true
 
-# -----------------------------------------------------------------------------
-# 15. Vendor modules
-# -----------------------------------------------------------------------------
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko oplus_chg_v2.ko stm_st54se_gpio.ko nxp-nci.ko"
-TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+# Debug
+TARGET_USES_LOGD := true
+TWRP_INCLUDE_LOGCAT := true
+TARGET_RECOVERY_DEVICE_MODULES += debuggerd
+RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/debuggerd
+TARGET_RECOVERY_DEVICE_MODULES += strace
+RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/strace
+TARGET_RECOVERY_DEVICE_MODULES += prebuilt
 
-# -----------------------------------------------------------------------------
-# 16. Localization / device defaults
-# -----------------------------------------------------------------------------
-TW_EXTRA_LANGUAGES := false
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
-TW_NO_NETWORK := true
+# Fastbootd
 TW_INCLUDE_FASTBOOTD := true
+
+# Other TWRP Configurations
+TW_THEME := portrait_hdpi
+TW_FRAMERATE := 60
+RECOVERY_SDCARD_ON_DATA := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_INCLUDE_NTFS_3G := true
+TW_USE_DMCTL := true
+TW_USE_TOOLBOX := true
+TARGET_USES_MKE2FS := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_MAX_BRIGHTNESS := 2047
+TW_EXTRA_LANGUAGES := false
+TW_DEFAULT_BRIGHTNESS := 250
 TW_EXCLUDE_APEX := true
+TW_STATUS_ICONS_ALIGN := center
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
+TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_sysmon.ko synaptics_tcm2.ko nt38773_touch.ko nxp-nci.ko stm_st54se_gpio.ko stm_nfc_i2c.ko qcom-hv-haptics.ko cs40l26-i2c.ko"
+TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone25/temp" # CPU-0-0-0
+TW_BACKUP_EXCLUSIONS := /data/fonts,/data/adb/ap,/data/adb/ksu
