@@ -180,7 +180,7 @@ jobs:
 
     - name: Upload build logs
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: build-logs-${{ github.run_id }}
         if-no-files-found: ignore
@@ -194,7 +194,7 @@ jobs:
     
     - name: Upload TWRP IMG
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: TWRP-3.7.1-16-${{ github.event.inputs.DEVICE_NAME }}-${{ env.BUILD_DATE }}.img
         if-no-files-found: ignore
